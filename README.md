@@ -15,7 +15,7 @@ By collecting information from the three identical antennas, if the brain(Neural
 - stay longer if food exists
 - avoid desert area(area with no food)
 
-## Screenshots
+## Demo
 https://youtu.be/_E16iH62hlA
 [![missing gif](https://github.com/woodyhoko/Artificial_Life/blob/main/AL_C.gif)](https://youtu.be/_E16iH62hlA)
 
