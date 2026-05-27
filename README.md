@@ -1,23 +1,52 @@
-# Artificial_Life
-A number of automated evolving creatures trying to survive in a limited resource environment.
+# Artificial Life Simulation
 
-## Simulation setup
-Every individual have a different Neural Network brain, reacting to the environment according to the response of the blackbox.  
-The environment is a playground with randomly distributed grass.  
-Every block of grass have it's own unique recovery rate, and creatures can eat grass to sustain its basic consumption.  
-Creatures can also consume others as an energy income, but when collision happens, the one with a higher energy will be the predator.  
+An **evolutionary ecosystem simulator** where neural-network-brained creatures compete for survival, reproduce, and evolve across generations — with no hand-coded behaviours.
 
-## Mechanism
-Each creature have an inherited brain from well-performing parents(the survivors), and owns the right to have offspring if better than others.  
-By collecting information from the three identical antennas, if the brain(Neural Network) is well developed, it can then be able to analyze and determine to:  
-- avoid enemy
-- chase enemy
-- stay longer if food exists
-- avoid desert area(area with no food)
+[![Demo — Competitive Mode](https://raw.githubusercontent.com/woodyhoko/Artificial_Life/main/AL_C.gif)](https://youtu.be/_E16iH62hlA)
+
+🎥 **[Watch full demo — Competitive](https://youtu.be/_E16iH62hlA)** | **[Watch full demo — Survival](https://youtu.be/XocJwLX-YtI)**
+
+---
+
+## Simulation Design
+
+### Environment
+
+- A 2D playground with randomly distributed **grass patches**, each with its own unique regeneration rate
+- Creatures consume grass to maintain energy; starving creatures die
+- Creatures with higher energy **predate** on lower-energy creatures upon collision
+
+### Creature Architecture
+
+Each creature has:
+- **3 antennas** (raycasts) as sensory inputs
+- A **fully-connected neural network** that maps sensor readings to movement decisions
+- A fixed energy budget that depletes each tick
+
+### Evolved Behaviours
+
+Given enough generations, well-performing neural networks learn to:
+- 🏃 Avoid stronger enemies
+- 🎯 Chase weaker prey
+- 🌿 Linger in food-rich areas
+- 🏜️ Avoid depleted desert zones
+
+---
+
+## Neuroevolution
+
+- Each generation, **survivors reproduce** — offspring inherit parent weights with small mutations
+- No gradient descent; selection pressure alone shapes the network over hundreds of generations
+- The population self-organizes into predator/prey dynamics without explicit programming
+
+---
 
 ## Demo
-https://youtu.be/_E16iH62hlA
-[![missing gif](https://github.com/woodyhoko/Artificial_Life/blob/main/AL_C.gif)](https://youtu.be/_E16iH62hlA)
 
-https://youtu.be/XocJwLX-YtI
-[![missing gif](https://github.com/woodyhoko/Artificial_Life/blob/main/AL_S.gif)](https://youtu.be/XocJwLX-YtI)
+| Mode | Description |
+|---|---|
+| **Competitive** | Two species competing — watch territorial and predator-prey dynamics emerge |
+| **Survival** | Single-species struggle for grass resources |
+
+[![Demo — Survival Mode](https://raw.githubusercontent.com/woodyhoko/Artificial_Life/main/AL_S.gif)](https://youtu.be/XocJwLX-YtI)
+
