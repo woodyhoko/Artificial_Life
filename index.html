@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artificial Life — Neuroevolution Ecosystem</title>
+<meta name="description" content="Neural-network creatures evolve predator/prey dynamics, foraging and territorial behaviour — with no hand-coded rules.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#06120d;--ink:#e7f7ee;--muted:#86b6a0;--lime:#6ee7b7;--cyan:#39e0d0;--amber:#ffd166;--line:rgba(110,231,183,.14)}
+  *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:Sora,system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .bg{position:fixed;inset:0;z-index:0;background:radial-gradient(900px 700px at 70% 10%,#0d2a1e 0,var(--bg) 60%)}
+  canvas#life{position:fixed;inset:0;z-index:1;opacity:.55}
+  .wrap{position:relative;z-index:3;max-width:1040px;margin:0 auto;padding:0 24px}
+  header{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding:80px 0 40px}
+  .tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--lime);border:1px solid var(--line);border-radius:100px;padding:6px 15px;width:fit-content;margin-bottom:24px}
+  .tag .d{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 12px var(--lime);animation:b 1.8s infinite}@keyframes b{50%{opacity:.25}}
+  h1{font-weight:800;font-size:clamp(38px,7vw,84px);line-height:1.02;letter-spacing:-1.5px}
+  h1 .hl{background:linear-gradient(110deg,var(--lime),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lede{font-size:clamp(16px,2vw,21px);color:var(--muted);max-width:680px;margin:24px 0}
+  .cta{display:flex;flex-wrap:wrap;gap:13px;margin-top:30px}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 25px;border-radius:12px;font-weight:700;font-size:15px;transition:.18s;border:1px solid var(--line)}
+  .btn.p{background:var(--lime);color:#04241a;border-color:var(--lime)}.btn.p:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(110,231,183,.35)}
+  .btn.g{background:rgba(255,255,255,.03)}.btn.g:hover{border-color:var(--lime);color:var(--lime);transform:translateY(-3px)}
+  section{padding:48px 0}
+  .lbl{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+  .ttl{font-weight:700;font-size:clamp(23px,3.4vw,36px);margin-bottom:30px;letter-spacing:-.5px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .c{background:rgba(13,33,24,.6);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:16px;padding:24px;transition:.2s}
+  .c:hover{transform:translateY(-4px);border-color:rgba(110,231,183,.45)}
+  .c .ic{font-size:24px;margin-bottom:12px}.c h3{font-size:16px;margin-bottom:7px}.c p{font-size:14px;color:var(--muted)}
+  .vid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .vid a{display:block;border-radius:18px;overflow:hidden;border:1px solid var(--line);position:relative;transition:.2s}
+  .vid a:hover{transform:translateY(-4px);border-color:var(--lime)}
+  .vid img{width:100%;display:block;aspect-ratio:16/10;object-fit:cover}
+  .vid .cap{position:absolute;bottom:0;left:0;right:0;padding:16px;background:linear-gradient(transparent,rgba(0,0,0,.85));font-weight:700}
+  .vid .cap small{display:block;color:var(--lime);font-weight:600;font-size:12px}
+  footer{border-top:1px solid var(--line);margin-top:50px;padding:38px 0 56px;text-align:center;color:var(--muted);font-size:14px}
+  footer a{color:var(--lime)}.fl{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+  @media(max-width:640px){.vid{grid-template-columns:1fr}}
+</style></head>
+<body>
+<div class="bg"></div><canvas id="life"></canvas>
+<div class="wrap">
+  <header>
+    <span class="tag"><span class="d"></span>Artificial Life · Neuroevolution</span>
+    <h1>Life, <span class="hl">as it could be.</span></h1>
+    <p class="lede">A 2D ecosystem of neural-network creatures with raycast senses and an energy budget. With no hand-coded rules, evolution alone discovers grazing, pursuit, evasion and territorial behaviour — emergent predator/prey dynamics straight out of Lotka-Volterra.</p>
+    <div class="cta">
+      <a class="btn p" href="https://youtu.be/_E16iH62hlA">▶ Watch the Competitive Demo</a>
+      <a class="btn g" href="https://youtu.be/XocJwLX-YtI">▶ Survival Demo</a>
+      <a class="btn g" href="https://github.com/woodyhoko/Artificial_Life#readme">📖 Documentation</a>
+    </div>
+  </header>
+
+  <section>
+    <div class="lbl">Emergent strategies</div>
+    <div class="ttl">Not programmed — attractors of the evolutionary dynamics.</div>
+    <div class="grid">
+      <div class="c"><div class="ic">🌿</div><h3>Grazing</h3><p>The network learns to steer toward grass-proximity raycast signals.</p></div>
+      <div class="c"><div class="ic">🦅</div><h3>Pursuit</h3><p>Asymmetric energy means stronger creatures learn to approach weaker ones.</p></div>
+      <div class="c"><div class="ic">💨</div><h3>Evasion</h3><p>Lighter creatures learn to turn away from the proximity signal of a stronger neighbour.</p></div>
+      <div class="c"><div class="ic">📍</div><h3>Territory</h3><p>Creatures near high-regrowth patches learn to loiter and hold ground.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="lbl">See it run</div>
+    <div class="ttl">Two modes, hundreds of generations.</div>
+    <div class="vid">
+      <a href="https://youtu.be/_E16iH62hlA"><img src="https://raw.githubusercontent.com/woodyhoko/Artificial_Life/main/AL_C.gif" alt="Competitive mode" loading="lazy"><div class="cap"><small>YOUTUBE</small>Competitive — two species</div></a>
+      <a href="https://youtu.be/XocJwLX-YtI"><img src="https://raw.githubusercontent.com/woodyhoko/Artificial_Life/main/AL_S.gif" alt="Survival mode" loading="lazy"><div class="cap"><small>YOUTUBE</small>Survival — one species</div></a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="fl"><a href="https://youtu.be/_E16iH62hlA">Competitive</a><a href="https://youtu.be/XocJwLX-YtI">Survival</a><a href="https://github.com/woodyhoko/Artificial_Life">GitHub</a><a href="https://github.com/woodyhoko/Artificial_Life#readme">README</a></div>
+    Built by <a href="https://github.com/woodyhoko">woodyhoko</a> · Neuroevolution Ecosystem Simulator
+  </footer>
+</div>
+<script>
+  // drifting "creatures" particle field
+  const cv=document.getElementById('life'),x=cv.getContext('2d');let W,H,P=[];
+  function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight;P=[];for(let i=0;i<55;i++)P.push({x:Math.random()*W,y:Math.random()*H,a:Math.random()*6.28,s:.3+Math.random()*.6,r:1.5+Math.random()*2.5});}
+  rs();addEventListener('resize',rs);
+  function tick(){x.clearRect(0,0,W,H);for(const p of P){p.a+=(Math.random()-.5)*.3;p.x+=Math.cos(p.a)*p.s;p.y+=Math.sin(p.a)*p.s;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;x.beginPath();x.arc(p.x,p.y,p.r,0,6.28);x.fillStyle="rgba(110,231,183,.7)";x.fill();}requestAnimationFrame(tick);}
+  tick();
+</script>
+</body></html>
